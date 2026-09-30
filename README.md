@@ -42,6 +42,11 @@ Strona musi być serwowana przez HTTP (nie z `file://`), a serwer musi obsługiw
 npx serve .
 ```
 
+## Wdrażanie zmian
+
+GitHub Pages cache'uje pliki do 10 minut. Po zmianie CSS lub JS podbij numer wersji
+w `index.html` (`main.css?v=…`, `main.js?v=…`), żeby odwiedzający od razu dostali nowe pliki.
+
 ## Struktura
 
 ```
