@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="pl" class="is-loading">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MORN — Kawa dla pierwszego światła</title>
+<meta name="description" content="MORN Premium Coffee. Ethiopia Yirgacheffe — jaśmin, bergamotka, czerwone owoce. Kawa palona dla pierwszego światła dnia.">
+<meta name="theme-color" content="#0f0c0a">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MORN Coffee Roasters">
+<meta property="og:locale" content="pl_PL">
+<meta property="og:title" content="MORN — Kawa dla pierwszego światła">
+<meta property="og:description" content="Better days brew here. Ethiopia Yirgacheffe — jaśmin, bergamotka, czerwone owoce. Jeden poranek w siedmiu rozdziałach.">
+<meta property="og:url" content="https://apkmasondev.github.io/morn/">
+<meta property="og:image" content="https://apkmasondev.github.io/morn/assets/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Torebka kawy MORN Ethiopia Yirgacheffe na tle słońca wschodzącego nad górami">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MORN — Kawa dla pierwszego światła">
+<meta name="twitter:description" content="Better days brew here. Ethiopia Yirgacheffe, edycja 01.">
+<meta name="twitter:image" content="https://apkmasondev.github.io/morn/assets/img/og.jpg">
+<link rel="canonical" href="https://apkmasondev.github.io/morn/">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23171210'/%3E%3Ccircle cx='32' cy='36' r='13' fill='%23eebd7c'/%3E%3Cpath d='M0 44 L16 34 L26 40 L40 27 L64 44 V64 H0Z' fill='%23171210'/%3E%3C/svg%3E">
+<link rel="preload" href="assets/fonts/CormorantGaramond-normal-latin-2fed1d.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/Jost-normal-latin-35841f.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<!-- ───────── Loader ───────── -->
+<div class="loader" aria-hidden="true">
+  <div class="loader__horizon">
+    <div class="loader__sun"></div>
+    <div class="loader__line"></div>
+  </div>
+  <div class="loader__time"><span class="loader__clock">05:30</span></div>
+  <div class="loader__stack stack"><span>Better</span><span>days</span><span>brew</span><span>here</span></div>
+</div>
+
+<!-- ───────── HUD ───────── -->
+<header class="hud hud--top">
+  <a class="hud__brand" href="#top" data-goto="dawn" aria-label="MORN — na początek">MORN</a>
+  <nav class="hud__actions" aria-label="Narzędzia">
+    <button class="hud__btn sound-btn" type="button" aria-pressed="false" aria-label="Dźwięk poranka">
+      <span class="sound-btn__bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <span class="sound-btn__label">Dźwięk</span>
+    </button>
+    <button class="hud__btn cart-btn" type="button" aria-haspopup="dialog">Koszyk <span class="cart-btn__count">0</span></button>
+    <button class="hud__btn menu-btn" type="button" aria-expanded="false" aria-controls="menu" aria-label="Otwórz menu">
+      <span class="menu-btn__label">Menu</span><span class="menu-btn__icon" aria-hidden="true"><i></i><i></i></span>
+    </button>
+  </nav>
+</header>
+
+<div class="hud hud--bottom" aria-hidden="true">
+  <div class="hud__clock">
+    <svg class="sunpath" viewBox="0 0 64 34"><path class="sunpath__arc" d="M4 30 A28 28 0 0 1 60 30"/><line class="sunpath__horizon" x1="0" y1="30" x2="64" y2="30"/><circle class="sunpath__sun" r="3.2" cx="4" cy="30"/></svg>
+    <div class="hud__time"><span class="hud__digits">05:47</span><span class="hud__place">Kraków · świt</span></div>
+  </div>
+  <div class="hud__chapter"><span class="hud__roman">I</span><span class="hud__name">Przed świtem</span></div>
+</div>
+
+<!-- ───────── Menu ───────── -->
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Rozdziały" hidden>
+  <div class="menu__inner">
+    <p class="menu__eyebrow label">Jeden poranek w siedmiu rozdziałach</p>
+    <ol class="menu__list">
+      <li><a href="#dawn" data-goto="dawn"><span class="menu__time">05:47</span><span class="menu__roman">I</span><span class="menu__name">Przed świtem</span></a></li>
+      <li><a href="#dawn" data-goto="film"><span class="menu__time">06:02</span><span class="menu__roman">II</span><span class="menu__name">Pierwsze światło</span></a></li>
+      <li><a href="#anatomy" data-goto="anatomy"><span class="menu__time">06:14</span><span class="menu__roman">III</span><span class="menu__name">Opakowanie</span></a></li>
+      <li><a href="#origin" data-goto="origin"><span class="menu__time">06:25</span><span class="menu__roman">IV</span><span class="menu__name">Pochodzenie</span></a></li>
+      <li><a href="#ritual" data-goto="ritual"><span class="menu__time">06:40</span><span class="menu__roman">V</span><span class="menu__name">Rytuał</span></a></li>
+      <li><a href="#mornings" data-goto="mornings"><span class="menu__time">07:15</span><span class="menu__roman">VI</span><span class="menu__name">Dwa poranki</span></a></li>
+      <li><a href="#shop" data-goto="shop"><span class="menu__time">07:30</span><span class="menu__roman">VII</span><span class="menu__name">Twój poranek</span></a></li>
+    </ol>
+    <div class="menu__foot">
+      <div class="stack"><span>Good</span><span>coffee</span><span>a brighter</span><span>tomorrow</span></div>
+      <p>MORN Coffee Roasters<br>Palarnia w&nbsp;Krakowie<br>Palimy we wtorki</p>
+    </div>
+  </div>
+</div>
+
+<main id="top">
+
+  <!-- ═════════ I + II · DAWN (hero → portal → film) ═════════ -->
+  <section class="dawn" id="dawn" data-hud="dark" aria-label="Przed świtem">
+    <div class="dawn__stage">
+
+      <div class="sky sky--night"></div>
+      <div class="sky sky--dawn"></div>
+      <div class="stars" aria-hidden="true"></div>
+
+      <div class="layer layer--sun"><div class="layer__in">
+        <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+          <defs>
+            <radialGradient id="g-glow"><stop offset="0" stop-color="#f4c686" stop-opacity=".55"/><stop offset=".35" stop-color="#d98e4f" stop-opacity=".22"/><stop offset="1" stop-color="#b8683a" stop-opacity="0"/></radialGradient>
+            <radialGradient id="g-sun" cx=".42" cy=".38" r=".7"><stop offset="0" stop-color="#f8d9a6"/><stop offset=".6" stop-color="#efbf7f"/><stop offset="1" stop-color="#e2a664"/></radialGradient>
+          </defs>
+          <circle class="sun-glow" cx="760" cy="640" r="620" fill="url(#g-glow)"/>
+          <circle class="sun-disc" cx="760" cy="640" r="118" fill="url(#g-sun)"/>
+        </svg>
+      </div></div>
+
+      <div class="layer layer--far"><div class="layer__in">
+        <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+          <defs><linearGradient id="g-far" x1="0" y1="0" x2="0" y2="1"><stop offset=".45" stop-color="#4b3527"/><stop offset=".8" stop-color="#6a4a34"/></linearGradient></defs>
+          <path data-ridge="far" fill="url(#g-far)" class="rim"/>
+        </svg>
+      </div></div>
+
+      <div class="layer layer--main"><div class="layer__in">
+        <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+          <defs>
+            <linearGradient id="g-main" x1="0" y1="0" x2="0" y2="1"><stop offset=".45" stop-color="#34261d"/><stop offset=".85" stop-color="#4d3728"/></linearGradient>
+            <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-24)"><line x1="0" y1="0" x2="0" y2="7" stroke="#f3cf9f" stroke-width="1" stroke-opacity=".07"/></pattern>
+          </defs>
+          <path data-ridge="main" fill="url(#g-main)" class="rim"/>
+          <path data-ridge="main" fill="url(#hatch)"/>
+        </svg>
+      </div></div>
+
+      <div class="layer layer--word">
+        <div class="layer__in hero-word">
+          <h1 class="wordmark" aria-label="MORN"><span>M</span><span>O</span><span>R</span><span>N</span></h1>
+        </div>
+      </div>
+
+      <div class="layer layer--mid"><div class="layer__in">
+        <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+          <defs><linearGradient id="g-mid" x1="0" y1="0" x2="0" y2="1"><stop offset=".6" stop-color="#261b15"/><stop offset=".95" stop-color="#3a2a1f"/></linearGradient></defs>
+          <path data-ridge="mid" fill="url(#g-mid)"/>
+          <path data-ridge="mid" fill="url(#hatch)"/>
+        </svg>
+      </div></div>
+
+      <div class="layer layer--near"><div class="layer__in">
+        <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+          <path data-ridge="near" fill="#120d0a"/>
+        </svg>
+      </div></div>
+
+      <div class="hero-copy">
+        <p class="hero-copy__sub label">Premium coffee</p>
+        <p class="hero-copy__line">Kawa dla pierwszego&nbsp;światła.</p>
+      </div>
+
+      <div class="hero-side hero-side--l stack"><span>Good</span><span>coffee</span><span>a brighter</span><span>tomorrow</span></div>
+      <div class="hero-side hero-side--r stack stack--r"><span>Better</span><span>days</span><span>brew</span><span>here</span></div>
+
+      <button class="scroll-cue" type="button" data-goto="film">
+        <span class="scroll-cue__text">Przewiń, a&nbsp;wstanie dzień</span>
+        <span class="scroll-cue__line" aria-hidden="true"></span>
+      </button>
+
+      <!-- Portal / Film -->
+      <div class="film" aria-label="Film: pierwsze światło">
+        <div class="film__media">
+          <video class="film__video" muted playsinline preload="auto" disablepictureinpicture disableremoteplayback></video>
+          <img class="film__fallback" alt="" decoding="async">
+        </div>
+        <div class="film__veil"></div>
+        <div class="film__bar film__bar--top"></div>
+        <div class="film__bar film__bar--bottom"></div>
+        <div class="film__hud">
+          <div class="film__captions">
+            <p class="caption" data-cap="0">Zanim świat się obudzi,</p>
+            <p class="caption" data-cap="1">jest chwila, która należy <em>tylko do&nbsp;ciebie.</em></p>
+            <p class="caption" data-cap="2">Para nad kubkiem. Ciepło w&nbsp;dłoniach. <em>Cisza.</em></p>
+            <p class="caption" data-cap="3">MORN. Rytuał na <em>pierwsze światło.</em></p>
+          </div>
+          <div class="film__meta">
+            <span class="label">Scena 01 · Kuchnia</span>
+            <span class="film__tc">00:00:00:00</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═════════ III · ANATOMY ═════════ -->
+  <section class="anatomy" id="anatomy" data-hud="dark" aria-labelledby="anatomy-title">
+    <div class="anatomy__stage">
+      <div class="anatomy__glow" aria-hidden="true"></div>
+
+      <div class="anatomy__intro">
+        <p class="label">III — Opakowanie</p>
+        <h2 id="anatomy-title" class="display">Poranek zamknięty w&nbsp;<em>340&nbsp;gramach.</em></h2>
+        <p class="lede">Zaprojektowaliśmy torebkę, którą chce się zostawić na blacie. Przyjrzyj się jej z&nbsp;bliska.</p>
+      </div>
+
+      <div class="bag" aria-hidden="true">
+        <div class="bag__zoom">
+          <div class="bag__tilt">
+            <img class="bag__img" src="assets/img/bag.webp" alt="" width="785" height="1324" decoding="async">
+            <div class="bag__sheen"></div>
+            <span class="hotspot" style="--x:.508;--y:.504;--d:.40"><i>1</i></span>
+            <span class="hotspot" style="--x:.80;--y:.118;--d:.30"><i>2</i></span>
+            <span class="hotspot" style="--x:.118;--y:.515;--d:.24"><i>3</i></span>
+            <span class="hotspot" style="--x:.42;--y:.745;--d:.46"><i>4</i></span>
+            <span class="hotspot" style="--x:.775;--y:.75;--d:.26"><i>5</i></span>
+          </div>
+        </div>
+        <div class="bag__shadow"></div>
+      </div>
+
+      <div class="anatomy__steps">
+        <article class="astep">
+          <p class="astep__num label">01 <span>/ 05</span></p>
+          <h3 class="astep__title">Wschód nad Gedeo</h3>
+          <p>Front każdej edycji MORN nosi grawiurę krajobrazu, z&nbsp;którego pochodzi kawa. Tu: słońce wstające nad wzgórzami Yirgacheffe.</p>
+        </article>
+        <article class="astep">
+          <p class="astep__num label">02 <span>/ 05</span></p>
+          <h3 class="astep__title"><em>Better days brew&nbsp;here</em></h3>
+          <p>Cztery słowa, które czytasz, zanim otworzysz torebkę. Nie slogan — obietnica złożona każdemu porankowi.</p>
+        </article>
+        <article class="astep">
+          <p class="astep__num label">03 <span>/ 05</span></p>
+          <h3 class="astep__title">Ludzie i&nbsp;miejsca</h3>
+          <p>Boki torebki mówią o&nbsp;tym, czego nie widać w&nbsp;filiżance: o&nbsp;rolnikach z&nbsp;Gedeo, o&nbsp;palarni w&nbsp;Krakowie i&nbsp;o&nbsp;jutrze, które chcemy robić lepszym.</p>
+        </article>
+        <article class="astep">
+          <p class="astep__num label">04 <span>/ 05</span></p>
+          <h3 class="astep__title">Etykieta jak nuta</h3>
+          <p>Jaśmin. Bergamotka. Czerwone owoce. Kremowy papier, czarny druk, zero krzyku — tylko to, co warto wiedzieć przed pierwszym łykiem.</p>
+        </article>
+        <article class="astep">
+          <p class="astep__num label">05 <span>/ 05</span></p>
+          <h3 class="astep__title">Trzy z&nbsp;pięciu</h3>
+          <p>Średnie palenie. Wystarczająco długie, by wydobyć karmelową słodycz; wystarczająco krótkie, by zostawić kwiaty.</p>
+        </article>
+      </div>
+
+      <ol class="anatomy__ticks" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li></ol>
+    </div>
+  </section>
+
+  <!-- ═════════ IV · ORIGIN ═════════ -->
+  <section class="origin" id="origin" data-hud="light" aria-labelledby="origin-title">
+    <svg class="ridge-edge" viewBox="0 0 1600 160" preserveAspectRatio="none" aria-hidden="true"><path data-ridge="edge" fill="currentColor"/></svg>
+
+    <div class="origin__head wrap">
+      <p class="label" data-reveal>IV — Pochodzenie</p>
+      <h2 id="origin-title" class="display" data-split>Tam, gdzie świt przychodzi <em>ponad chmurami.</em></h2>
+      <p class="lede" data-reveal>Etiopia, strefa Gedeo. Kawa rośnie tu w&nbsp;cieniu ensetu i&nbsp;starych akacji, na wysokości, na której poranki są chłodne, a&nbsp;owoce dojrzewają powoli. Stąd ta jasność w&nbsp;filiżance.</p>
+    </div>
+
+    <figure class="elevation wrap-wide">
+      <svg class="elevation__svg" viewBox="0 0 1600 420" preserveAspectRatio="none" aria-hidden="true">
+        <defs><linearGradient id="g-elev" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d7924f" stop-opacity=".16"/><stop offset=".7" stop-color="#1b1511" stop-opacity=".03"/><stop offset="1" stop-color="#1b1511" stop-opacity="0"/></linearGradient></defs>
+        <g class="elevation__grid">
+          <line x1="0" x2="1600" y1="90" y2="90"/><line x1="0" x2="1600" y1="210" y2="210"/><line x1="0" x2="1600" y1="330" y2="330"/>
+        </g>
+        <path class="elevation__fill" data-ridge="elev-fill"/>
+        <path class="elevation__line" data-ridge="elev"/>
+      </svg>
+      <div class="elevation__axis" aria-hidden="true"><span style="--y:90">2 100 m</span><span style="--y:210">1 900 m</span><span style="--y:330">1 700 m</span></div>
+      <div class="elevation__marks"></div>
+      <figcaption class="label">Przekrój: dolina Yirgacheffe, z&nbsp;zachodu na wschód</figcaption>
+    </figure>
+
+    <div class="origin__body wrap">
+      <dl class="facts">
+        <div class="facts__row" data-reveal><dt>Region</dt><dd>Gedeo, Yirgacheffe, Etiopia</dd></div>
+        <div class="facts__row" data-reveal><dt>Wysokość</dt><dd>1&nbsp;850 – 2&nbsp;100 m n.p.m.</dd></div>
+        <div class="facts__row" data-reveal><dt>Odmiany</dt><dd>Etiopskie heirloom · 74110, 74112</dd></div>
+        <div class="facts__row" data-reveal><dt>Obróbka</dt><dd>Myta, suszona na podwyższonych łóżkach</dd></div>
+        <div class="facts__row" data-reveal><dt>Zbiór</dt><dd>Listopad 2025 – styczeń 2026</dd></div>
+        <div class="facts__row" data-reveal><dt>Palenie</dt><dd>Średnie · 3/5 · Kraków, we wtorki</dd></div>
+      </dl>
+
+      <div class="notes" aria-label="Profil smaku">
+        <p class="label notes__label" data-reveal>W filiżance</p>
+        <div class="note" data-note="jasmine">
+          <h3 class="note__word" data-split>Jaśmin.</h3>
+          <p class="note__when">W&nbsp;aromacie, zaraz po zmieleniu.</p>
+        </div>
+        <div class="note" data-note="bergamot">
+          <h3 class="note__word" data-split>Bergamotka.</h3>
+          <p class="note__when">W&nbsp;pierwszym łyku — jasna, cytrusowa.</p>
+        </div>
+        <div class="note" data-note="berries">
+          <h3 class="note__word" data-split>Czerwone owoce.</h3>
+          <p class="note__when">W&nbsp;posmaku, gdy kawa lekko przestygnie.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="origin__coda wrap" data-reveal><span class="label">Z&nbsp;torebki</span><em>A&nbsp;brighter kind of&nbsp;bold.</em></p>
+  </section>
+
+  <!-- ═════════ V · RITUAL ═════════ -->
+  <section class="ritual" id="ritual" data-hud="light" aria-labelledby="ritual-title">
+    <div class="ritual__grid wrap">
+      <header class="ritual__head">
+        <p class="label" data-reveal>V — Rytuał</p>
+        <h2 id="ritual-title" class="display" data-split>Cztery minuty, które <em>należą do&nbsp;ciebie.</em></h2>
+        <p class="lede" data-reveal>French press to najprostszy rytuał świata: woda, czas i&nbsp;odrobina uwagi. Zaparz z&nbsp;nami — zegar poprowadzi cię krok po kroku.</p>
+        <ul class="prep" data-reveal>
+          <li><b>30 g</b><span>kawy</span></li>
+          <li><b>grube</b><span>mielenie</span></li>
+          <li><b>500 ml</b><span>wody</span></li>
+          <li><b>94 °C</b><span>temperatura</span></li>
+        </ul>
+      </header>
+
+      <div class="brew" data-reveal>
+        <div class="brew__dial">
+          <svg viewBox="0 0 400 250" aria-hidden="true">
+            <path class="brew__track" d="M30 210 A170 170 0 0 1 370 210"/>
+            <path class="brew__progress" d="M30 210 A170 170 0 0 1 370 210"/>
+            <g class="brew__ticks"></g>
+            <circle class="brew__sun" cx="30" cy="210" r="15"/>
+            <line class="brew__horizon" x1="0" y1="210" x2="400" y2="210"/>
+          </svg>
+          <div class="brew__readout">
+            <span class="brew__time" aria-live="off">4:00</span>
+            <span class="brew__state label" aria-live="polite">Gotowy, kiedy ty</span>
+          </div>
+        </div>
+        <ol class="brew__steps">
+          <li data-at="0"><span class="brew__at">0:00</span><div><h3>Zalej</h3><p>Wlej całą wodę okrężnym ruchem. Niech każde ziarno się zanurzy.</p></div></li>
+          <li data-at="60"><span class="brew__at">1:00</span><div><h3>Przełam</h3><p>Łyżką przełam kożuszek na powierzchni i&nbsp;zbierz pianę.</p></div></li>
+          <li data-at="75"><span class="brew__at">1:15</span><div><h3>Poczekaj</h3><p>Przykryj. Nie mieszaj. Popatrz chwilę przez okno.</p></div></li>
+          <li data-at="240"><span class="brew__at">4:00</span><div><h3>Dociśnij</h3><p>Powoli opuść tłok i&nbsp;nalej od razu. Dzień dobry.</p></div></li>
+        </ol>
+        <div class="brew__controls">
+          <button class="btn btn--dark brew__start" type="button"><span>Rozpocznij rytuał</span></button>
+          <button class="btn-text brew__reset" type="button" hidden>Od nowa</button>
+          <button class="btn-text brew__fast" type="button">Podgląd w&nbsp;12&nbsp;sekund</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ VI · TWO MORNINGS ═════════ -->
+  <section class="mornings" id="mornings" data-hud="dark" aria-labelledby="mornings-title">
+    <header class="mornings__head wrap">
+      <p class="label" data-reveal>VI — Dwa poranki</p>
+      <h2 id="mornings-title" class="display" data-split>Każdy poranek jest inny. <em>Rytuał zostaje.</em></h2>
+    </header>
+    <div class="mornings__panels">
+      <figure class="panel">
+        <div class="panel__media">
+          <video muted playsinline loop preload="none" poster="assets/img/ritual-poster.webp" data-src-lg="assets/video/ritual-1600.mp4" data-src-sm="assets/video/ritual-960.mp4"></video>
+        </div>
+        <figcaption class="panel__cap">
+          <span class="panel__time">06:40</span>
+          <span class="panel__place label">Kuchnia, Żoliborz</span>
+          <p>Pierwszy łyk, zanim ktokolwiek zdąży o&nbsp;cokolwiek zapytać.</p>
+        </figcaption>
+      </figure>
+      <figure class="panel">
+        <div class="panel__media">
+          <video muted playsinline loop preload="none" poster="assets/img/desk-poster.webp" data-src-lg="assets/video/desk-1600.mp4" data-src-sm="assets/video/desk-960.mp4"></video>
+        </div>
+        <figcaption class="panel__cap">
+          <span class="panel__time">07:15</span>
+          <span class="panel__place label">Pracownia, Oliwa</span>
+          <p>Notes, kubek, jeszcze bez maili. Dzień zaczyna się po&nbsp;swojemu.</p>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ═════════ VII · SHOP ═════════ -->
+  <section class="shop" id="shop" data-hud="light" aria-labelledby="shop-title">
+    <div class="shop__grid">
+      <figure class="shop__visual" data-hud="dark">
+        <div class="shop__img"><img src="assets/img/scene-720.webp" srcset="assets/img/scene-720.webp 720w, assets/img/scene.webp 1122w" sizes="(max-width: 900px) 100vw, 50vw" alt="Torebka MORN Ethiopia Yirgacheffe na kamiennym blacie, obok kubek kawy i miseczka ziaren w porannym świetle" loading="lazy" decoding="async"></div>
+        <figcaption class="label">Edycja 01 · Ethiopia Yirgacheffe</figcaption>
+      </figure>
+
+      <div class="shop__panel">
+        <p class="label" data-reveal>VII — Twój poranek</p>
+        <h2 id="shop-title" class="display" data-split>Ethiopia <em>Yirgacheffe</em></h2>
+        <p class="shop__notes" data-reveal>Jaśmin · Bergamotka · Czerwone owoce</p>
+        <div class="roast" data-reveal aria-label="Stopień palenia: 3 z 5"><span class="label">Palenie</span><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><span class="roast__txt">Średnie</span></div>
+
+        <form class="config" novalidate>
+          <fieldset class="opt" data-reveal>
+            <legend class="label">Forma</legend>
+            <div class="seg">
+              <label><input type="radio" name="form" value="ziarno" checked><span>Ziarno</span></label>
+              <label><input type="radio" name="form" value="mielona"><span>Mielona</span></label>
+            </div>
+            <div class="grind" hidden>
+              <label><input type="radio" name="grind" value="Espresso"><span>Espresso</span></label>
+              <label><input type="radio" name="grind" value="Kawiarka"><span>Kawiarka</span></label>
+              <label><input type="radio" name="grind" value="Przelew"><span>Przelew</span></label>
+              <label><input type="radio" name="grind" value="French press" checked><span>French press</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="opt" data-reveal>
+            <legend class="label">Waga</legend>
+            <div class="seg">
+              <label><input type="radio" name="size" value="340" checked><span>340 g <small>~ 22 filiżanki</small></span></label>
+              <label><input type="radio" name="size" value="1000"><span>1 kg <small>~ 66 filiżanek</small></span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="opt" data-reveal>
+            <legend class="label">Zakup</legend>
+            <div class="seg seg--stack">
+              <label><input type="radio" name="plan" value="once" checked><span>Jednorazowo</span></label>
+              <label><input type="radio" name="plan" value="sub"><span>Poranki w&nbsp;subskrypcji <small>−15% · co 2 tygodnie · rezygnujesz jednym kliknięciem</small></span></label>
+            </div>
+          </fieldset>
+
+          <div class="buy" data-reveal>
+            <div class="price"><span class="price__val">69</span><span class="price__cur">zł</span><s class="price__old" hidden></s></div>
+            <button class="btn btn--dark buy__btn" type="submit"><span>Dodaj do koszyka</span></button>
+          </div>
+        </form>
+
+        <ul class="perks" data-reveal>
+          <li>Palona we wtorki, wysyłana w&nbsp;48&nbsp;h</li>
+          <li>Darmowa dostawa od 120&nbsp;zł</li>
+          <li>Torebka z&nbsp;zaworem i&nbsp;zamknięciem strunowym</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ END · SUNSET ═════════ -->
+  <footer class="dusk" id="dusk" data-hud="dark">
+    <svg class="ridge-edge ridge-edge--dusk" viewBox="0 0 1600 160" preserveAspectRatio="none" aria-hidden="true"><path data-ridge="edge2" fill="currentColor"/></svg>
+    <div class="dusk__scene" aria-hidden="true">
+      <div class="dusk__sky"></div>
+      <svg class="dusk__svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice">
+        <circle class="dusk__glow" cx="1210" cy="560" r="520" fill="url(#g-glow)"/>
+        <circle class="dusk__sun" cx="1210" cy="560" r="96" fill="url(#g-sun)"/>
+        <path data-ridge="far" fill="#3a2a20"/>
+        <path data-ridge="main" fill="#271c16"/>
+        <path data-ridge="mid" fill="#1a130f"/>
+        <path data-ridge="near" fill="#0f0b09"/>
+      </svg>
+    </div>
+    <div class="dusk__content wrap">
+      <h2 class="dusk__title display" data-split>Do jutra, <em>o&nbsp;świcie.</em></h2>
+      <form class="letter" novalidate>
+        <label class="label" for="letter-email">Poranny list — raz w&nbsp;miesiącu, o&nbsp;6:00</label>
+        <div class="letter__row">
+          <input id="letter-email" type="email" name="email" placeholder="twój@adres.pl" autocomplete="email" required>
+          <button class="btn btn--sun" type="submit"><span>Zapisz się</span></button>
+        </div>
+        <p class="letter__msg" role="status"></p>
+      </form>
+      <div class="dusk__foot">
+        <div class="stack"><span>People</span><span>places</span><span>a brighter</span><span>tomorrow</span></div>
+        <nav class="dusk__links" aria-label="Stopka">
+          <a href="#anatomy" data-goto="anatomy">Opakowanie</a>
+          <a href="#origin" data-goto="origin">Pochodzenie</a>
+          <a href="#ritual" data-goto="ritual">Rytuał</a>
+          <a href="#shop" data-goto="shop">Sklep</a>
+        </nav>
+        <p class="dusk__legal">© 2026 MORN Coffee Roasters · Kraków<br><span>Projekt koncepcyjny — marka fikcyjna.</span></p>
+      </div>
+    </div>
+  </footer>
+</main>
+
+<!-- ───────── Cart ───────── -->
+<aside class="cart" role="dialog" aria-modal="true" aria-labelledby="cart-title" hidden>
+  <div class="cart__scrim" data-close></div>
+  <div class="cart__panel">
+    <header class="cart__head">
+      <h2 id="cart-title">Koszyk</h2>
+      <button class="btn-text" type="button" data-close>Zamknij</button>
+    </header>
+    <ul class="cart__items"></ul>
+    <p class="cart__empty">Twój koszyk czeka na pierwszy poranek.</p>
+    <footer class="cart__foot">
+      <div class="cart__ship"><span class="cart__ship-txt"></span><span class="cart__ship-bar"><i></i></span></div>
+      <div class="cart__total"><span>Razem</span><b class="cart__sum">0 zł</b></div>
+      <button class="btn btn--dark cart__checkout" type="button"><span>Przejdź do kasy</span></button>
+      <p class="cart__note" hidden>MORN to projekt koncepcyjny — kasa jest zamknięta, ale dziękujemy, że chcesz spróbować.</p>
+    </footer>
+  </div>
+</aside>
+
+<div class="flyer" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<noscript><style>.loader{display:none}html.is-loading{overflow:auto}</style></noscript>
+
+<script src="js/vendor/gsap.min.js"></script>
+<script src="js/vendor/ScrollTrigger.min.js"></script>
+<script src="js/vendor/lenis.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
