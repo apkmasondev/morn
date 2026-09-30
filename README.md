@@ -28,7 +28,8 @@ w okno do filmu.
 - [GSAP](https://gsap.com) + ScrollTrigger oraz [Lenis](https://github.com/darkroomengineering/lenis), dołączone w `js/vendor/`.
 - Fonty Cormorant Garamond i Jost hostowane lokalnie (licencja SIL Open Font License).
 - Film przewijany scrollem zakodowany z krótkim GOP, osobny kadr pionowy na telefony.
-- Filmy ładowane leniwie i pauzowane poza ekranem, dźwięk domyślnie wyłączony.
+- Filmy ładowane leniwie i pauzowane poza ekranem.
+- Ścieżka dźwiękowa „First Light Ritual” z warstwą porannego śpiewu ptaków: domyślnie wyłączona, strumieniowana dopiero po kliknięciu „Dźwięk”.
 - Obsługa `prefers-reduced-motion`, nawigacji klawiaturą i czytników ekranu, fallback do posterów.
 - Koszyk i newsletter działają wyłącznie w przeglądarce. Strona nie wysyła żadnych danych.
 

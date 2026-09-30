@@ -649,27 +649,37 @@
       o.connect(a); a.connect(master); o.start(t); o.stop(t + 2.7);
     });
   }
-  async function startAmbient() {
+  // "First Light Ritual" — a 2.5-minute loop, streamed through a gain node (decoding it whole would cost ~50 MB of RAM)
+  let ambStopT = 0;
+  function startAmbient() {
     const ctx = ensureAudio();
-    try {
-      if (!ctx || location.protocol === 'file:') throw new Error('no-webaudio');
-      if (!amb) {
-        const buf = await fetch('assets/audio/morning.mp3').then(r => r.arrayBuffer()).then(b => new Promise((res, rej) => ctx.decodeAudioData(b, res, rej)));
-        ambGain = ctx.createGain(); ambGain.gain.value = 0; ambGain.connect(master);
-        amb = ctx.createBufferSource(); amb.buffer = buf; amb.loop = true;
-        amb.loopStart = 0.06; amb.loopEnd = buf.duration - 0.06;
-        amb.connect(ambGain); amb.start();
+    clearTimeout(ambStopT);
+    if (!ambEl) {
+      ambEl = new Audio('assets/audio/morning.mp3');
+      ambEl.loop = true; ambEl.preload = 'auto';
+      if (ctx && location.protocol !== 'file:') {
+        try {
+          amb = ctx.createMediaElementSource(ambEl);
+          ambGain = ctx.createGain(); ambGain.gain.value = 0;
+          amb.connect(ambGain); ambGain.connect(master);
+        } catch (e) { amb = null; ambGain = null; }
       }
-      ambGain.gain.cancelScheduledValues(ctx.currentTime);
-      ambGain.gain.setTargetAtTime(0.75, ctx.currentTime, 0.8);
-    } catch (e) {
-      if (!ambEl) { ambEl = new Audio('assets/audio/morning.mp3'); ambEl.loop = true; ambEl.volume = 0.6; }
-      ambEl.play().catch(() => {});
     }
+    if (ambGain) {
+      ambGain.gain.cancelScheduledValues(ctx.currentTime);
+      ambGain.gain.setValueAtTime(ambGain.gain.value, ctx.currentTime);
+      ambGain.gain.setTargetAtTime(0.8, ctx.currentTime, 0.9);
+    } else ambEl.volume = 0.7;
+    ambEl.play().catch(() => {});
   }
   function stopAmbient() {
-    if (ambGain && actx) { ambGain.gain.cancelScheduledValues(actx.currentTime); ambGain.gain.setTargetAtTime(0, actx.currentTime, 0.4); }
-    if (ambEl) ambEl.pause();
+    if (!ambEl) return;
+    if (ambGain && actx) {
+      ambGain.gain.cancelScheduledValues(actx.currentTime);
+      ambGain.gain.setValueAtTime(ambGain.gain.value, actx.currentTime);
+      ambGain.gain.setTargetAtTime(0, actx.currentTime, 0.35);
+      ambStopT = setTimeout(() => { if (!ambOn) ambEl.pause(); }, 1600);
+    } else ambEl.pause();
   }
   soundBtn.addEventListener('click', () => {
     ambOn = !ambOn;
@@ -678,8 +688,7 @@
     ambOn ? startAmbient() : stopAmbient();
   });
   document.addEventListener('visibilitychange', () => {
-    if (!actx) return;
-    if (document.hidden) actx.suspend(); else actx.resume();
+    if (actx) document.hidden ? actx.suspend() : actx.resume();
     if (ambEl && ambOn) document.hidden ? ambEl.pause() : ambEl.play().catch(() => {});
   });
 
