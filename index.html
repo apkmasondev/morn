@@ -372,8 +372,12 @@
   <section class="shop" id="shop" data-hud="light" aria-labelledby="shop-title">
     <div class="shop__grid">
       <figure class="shop__visual" data-hud="dark">
-        <div class="shop__img"><img src="assets/img/scene-720.webp" srcset="assets/img/scene-720.webp 720w, assets/img/scene.webp 1122w" sizes="(max-width: 900px) 100vw, 50vw" alt="Torebka MORN Ethiopia Yirgacheffe na kamiennym blacie, obok kubek kawy i miseczka ziaren w porannym świetle" loading="lazy" decoding="async"></div>
-        <figcaption class="label">Edycja 01 · Ethiopia Yirgacheffe</figcaption>
+        <div class="shop__img">
+          <div class="shop__stack">
+            <img class="shop__shot" src="assets/img/shop/beans-340-720.webp" srcset="assets/img/shop/beans-340-720.webp 720w, assets/img/shop/beans-340.webp 1122w" sizes="(max-width: 860px) 100vw, 50vw" width="1122" height="1402" alt="Torebka MORN Ethiopia Yirgacheffe, kawa ziarnista 340 g, na kamiennym blacie obok kubka kawy i miseczki ziaren" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <figcaption class="label shop__caption" aria-live="polite">Edycja 01 · Ziarno · 340 g</figcaption>
       </figure>
 
       <div class="shop__panel">
@@ -414,6 +418,7 @@
           </fieldset>
 
           <div class="buy" data-reveal>
+            <span class="buy__thumb" aria-hidden="true"><img src="assets/img/shop/beans-340-720.webp" alt="" width="72" height="90" loading="lazy" decoding="async"></span>
             <div class="price"><span class="price__val">69</span><span class="price__cur">zł</span><s class="price__old" hidden></s></div>
             <button class="btn btn--dark buy__btn" type="submit"><span>Dodaj do koszyka</span></button>
           </div>

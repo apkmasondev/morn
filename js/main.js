@@ -732,9 +732,70 @@
   /* ────────────────────────────────────────────────────────────────────────
      VII · SHOP + CART
      ──────────────────────────────────────────────────────────────────────── */
-  gsap.fromTo('.shop__img img', { yPercent: -6 }, {
+  gsap.fromTo('.shop__stack', { yPercent: -6 }, {
     yPercent: 0, ease: 'none', scrollTrigger: { trigger: '.shop', start: 'top bottom', end: 'bottom top', scrub: true }
   });
+
+  /* product photography follows the configuration — one shot per form × grind × size */
+  const VARIANT = {
+    ziarno: { slug: 'beans', label: 'Ziarno', alt: 'kawa ziarnista', props: 'kubka kawy i miseczki ziaren' },
+    Espresso: { slug: 'espresso', label: 'Mielona do espresso', alt: 'kawa mielona do espresso', props: 'filiżanki espresso i kolby ekspresu' },
+    Kawiarka: { slug: 'moka', label: 'Mielona do kawiarki', alt: 'kawa mielona do kawiarki', props: 'kawiarki i kubka kawy' },
+    Przelew: { slug: 'pourover', label: 'Mielona do przelewu', alt: 'kawa mielona do przelewu', props: 'dripa z karafką i kubka kawy' },
+    'French press': { slug: 'frenchpress', label: 'Mielona do french pressa', alt: 'kawa mielona do french pressa', props: 'french pressa i kubka kawy' }
+  };
+  const shotStack = $('.shop__stack');
+  const shopCaption = $('.shop__caption');
+  const thumbImg = $('.buy__thumb img');
+  const SHOT_SIZES = '(max-width: 860px) 100vw, 50vw';
+  const shotSrc = (slug, size) => `assets/img/shop/${slug}-${size}`;
+  const shotSrcset = base => `${base}-720.webp 720w, ${base}.webp 1122w`;
+  let shotKey = 'beans-340', shotToken = 0;
+
+  const showVariant = c => {
+    const v = VARIANT[c.form === 'mielona' ? c.grind : 'ziarno'] || VARIANT.ziarno;
+    const key = `${v.slug}-${c.size}`;
+    shopCaption.textContent = `Edycja 01 · ${v.label} · ${c.size === 1000 ? '1 kg' : '340 g'}`;
+    if (key === shotKey) return;
+    shotKey = key;
+    const token = ++shotToken;
+    const base = shotSrc(v.slug, c.size);
+    const img = new Image();
+    img.className = 'shop__shot is-entering';
+    img.sizes = SHOT_SIZES; img.srcset = shotSrcset(base); img.src = `${base}-720.webp`;
+    img.width = 1122; img.height = 1402; img.decoding = 'async';
+    img.alt = `Torebka MORN Ethiopia Yirgacheffe, ${v.alt} ${c.size === 1000 ? '1 kg' : '340 g'}, na kamiennym blacie obok ${v.props}`;
+    const ready = img.decode ? img.decode().catch(() => {}) : new Promise(r => { img.onload = img.onerror = r; });
+    ready.then(() => {
+      if (token !== shotToken) return;
+      shotStack.appendChild(img);
+      const olds = $$('.shop__shot', shotStack).filter(el => el !== img);
+      img.classList.remove('is-entering');
+      gsap.fromTo(img, { opacity: 0, scale: REDUCE ? 1 : 1.06 }, {
+        opacity: 1, scale: 1, duration: REDUCE ? 0.3 : 1.2, ease: 'expo.out',
+        onComplete: () => { if (token === shotToken) olds.forEach(el => el.remove()); }
+      });
+      // compact preview for phones, where the big photo sits above the options
+      thumbImg.classList.add('is-swapping');
+      setTimeout(() => { if (token === shotToken) { thumbImg.src = `${base}-720.webp`; thumbImg.classList.remove('is-swapping'); } }, 180);
+    });
+  };
+
+  // warm the cache with every variant once the shop is near
+  const preloadShots = new IntersectionObserver(entries => {
+    if (!entries.some(e => e.isIntersecting)) return;
+    preloadShots.disconnect();
+    const bases = [];
+    Object.values(VARIANT).forEach(v => [340, 1000].forEach(s => bases.push(shotSrc(v.slug, s))));
+    let i = 0;
+    const next = () => {
+      if (i >= bases.length) return;
+      const im = new Image(); im.sizes = SHOT_SIZES; im.srcset = shotSrcset(bases[i++]);
+      im.onload = im.onerror = () => setTimeout(next, 60);
+    };
+    (window.requestIdleCallback || setTimeout)(next);
+  }, { rootMargin: '150% 0px' });
+  preloadShots.observe($('.shop'));
   const form = $('.config');
   const grind = $('.grind');
   const priceVal = $('.price__val'), priceOld = $('.price__old');
@@ -750,10 +811,13 @@
   };
   const updatePrice = () => {
     const c = readCfg();
-    grind.hidden = c.form !== 'mielona';
+    const showGrind = c.form === 'mielona';
+    if (showGrind && grind.hidden) { grind.hidden = false; gsap.fromTo(grind.children, { opacity: 0, y: -6 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.04, ease: 'power3.out' }); }
+    else if (!showGrind) grind.hidden = true;
     gsap.to(priceShown, { v: c.price, duration: 0.8, ease: 'power3.out', onUpdate: () => { priceVal.textContent = Math.round(priceShown.v); } });
     priceOld.hidden = c.plan !== 'sub';
     priceOld.textContent = c.base + ' zł';
+    showVariant(c);
   };
   form.addEventListener('change', updatePrice);
 
@@ -785,7 +849,7 @@
     $('.cart__ship-bar i').style.setProperty('--p', clamp(sum / 120, 0, 1));
     cartItems.innerHTML = cart.map((it, i) => `
       <li class="citem">
-        <img src="assets/img/bag-640.webp" alt="" width="64" height="86">
+        <img src="${shotSrc((VARIANT[it.form === 'mielona' ? it.grind : 'ziarno'] || VARIANT.ziarno).slug, it.size)}-720.webp" alt="" width="64" height="86" loading="lazy">
         <div>
           <h3>Ethiopia Yirgacheffe</h3>
           <p>${it.size === 1000 ? '1 kg' : '340 g'} · ${it.form === 'mielona' ? 'mielona, ' + it.grind.toLowerCase() : 'ziarno'}${it.plan === 'sub' ? '<br>Subskrypcja co 2 tygodnie' : ''}</p>

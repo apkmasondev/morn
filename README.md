@@ -19,7 +19,7 @@ w okno do filmu.
 | 06:25   | Pochodzenie      | Profil wysokości Yirgacheffe rysowany scrollem, metryka ziarna, nuty smaku |
 | 06:40   | Rytuał           | Działający 4-minutowy timer do French pressa |
 | 07:15   | Dwa poranki      | Dyptyk dwóch filmów |
-| 07:30   | Twój poranek     | Konfigurator produktu i koszyk |
+| 07:30   | Twój poranek     | Konfigurator, w którym zdjęcie produktu zmienia się razem z wyborem (10 wariantów), i koszyk |
 | —       | Do jutra         | Zachód słońca, newsletter |
 
 ## Technika
