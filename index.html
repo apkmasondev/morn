@@ -27,8 +27,8 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/CormorantGaramond-normal-latin-2fed1d.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/Jost-normal-latin-35841f.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/fonts.css?v=8">
-<link rel="stylesheet" href="css/main.css?v=8">
+<link rel="stylesheet" href="css/fonts.css?v=10">
+<link rel="stylesheet" href="css/main.css?v=10">
 </head>
 <body>
 
@@ -199,11 +199,11 @@
           <div class="bag__tilt">
             <img class="bag__img" src="assets/img/bag.webp" alt="" width="785" height="1324" decoding="async">
             <div class="bag__sheen"></div>
-            <span class="hotspot" style="--x:.508;--y:.504;--d:.40"><i>1</i></span>
-            <span class="hotspot" style="--x:.80;--y:.118;--d:.30"><i>2</i></span>
-            <span class="hotspot" style="--x:.118;--y:.515;--d:.24"><i>3</i></span>
-            <span class="hotspot" style="--x:.42;--y:.745;--d:.46"><i>4</i></span>
-            <span class="hotspot" style="--x:.775;--y:.75;--d:.26"><i>5</i></span>
+            <span class="hotspot" style="--x0:0.345;--y0:0.435;--x1:0.685;--y1:0.6"><i>1</i></span>
+            <span class="hotspot" style="--x0:0.735;--y0:0.068;--x1:0.89;--y1:0.176"><i>2</i></span>
+            <span class="hotspot" style="--x0:0.04;--y0:0.445;--x1:0.195;--y1:0.572"><i>3</i></span>
+            <span class="hotspot" style="--x0:0.24;--y0:0.712;--x1:0.655;--y1:0.836"><i>4</i></span>
+            <span class="hotspot" style="--x0:0.678;--y0:0.702;--x1:0.905;--y1:0.772"><i>5</i></span>
           </div>
         </div>
         <div class="bag__shadow"></div>
@@ -252,16 +252,31 @@
     </div>
 
     <figure class="elevation wrap-wide">
-      <svg class="elevation__svg" viewBox="0 0 1600 420" preserveAspectRatio="none" aria-hidden="true">
-        <defs><linearGradient id="g-elev" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d7924f" stop-opacity=".16"/><stop offset=".7" stop-color="#1b1511" stop-opacity=".03"/><stop offset="1" stop-color="#1b1511" stop-opacity="0"/></linearGradient></defs>
-        <g class="elevation__grid">
-          <line x1="0" x2="1600" y1="90" y2="90"/><line x1="0" x2="1600" y1="210" y2="210"/><line x1="0" x2="1600" y1="330" y2="330"/>
-        </g>
-        <path class="elevation__fill" data-ridge="elev-fill"/>
-        <path class="elevation__line" data-ridge="elev"/>
-      </svg>
-      <div class="elevation__axis" aria-hidden="true"><span style="--y:90">2 100 m</span><span style="--y:210">1 900 m</span><span style="--y:330">1 700 m</span></div>
-      <div class="elevation__marks"></div>
+      <div class="elevation__box">
+        <div class="elevation__glow" aria-hidden="true"></div>
+        <div class="elevation__stage" aria-hidden="true">
+          <div class="elevation__sun"></div>
+          <svg class="elevation__svg" viewBox="0 0 1600 420" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="g-elev-far" x1="0" y1="0" x2="0" y2="1"><stop offset=".25" stop-color="#e2cfb1"/><stop offset=".85" stop-color="#ebdcc6"/></linearGradient>
+              <linearGradient id="g-elev" x1="0" y1="0" x2="0" y2="1"><stop offset=".2" stop-color="#e7d6bb"/><stop offset=".7" stop-color="#ede1cd"/><stop offset="1" stop-color="#efe5d4"/></linearGradient>
+              <linearGradient id="g-mist" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6eee2" stop-opacity="0"/><stop offset=".55" stop-color="#f6eee2" stop-opacity=".85"/><stop offset="1" stop-color="#f6eee2" stop-opacity="0"/></linearGradient>
+              <linearGradient id="g-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#efe5d4" stop-opacity="0"/><stop offset="1" stop-color="#efe5d4"/></linearGradient>
+            </defs>
+            <g class="elevation__grid">
+              <line x1="0" x2="1600" y1="90" y2="90"/><line x1="0" x2="1600" y1="210" y2="210"/><line x1="0" x2="1600" y1="330" y2="330"/>
+            </g>
+            <path class="elevation__far" data-ridge="elev-far" fill="url(#g-elev-far)"/>
+            <rect class="elevation__mist" x="-40" y="238" width="1680" height="130" fill="url(#g-mist)"/>
+            <path class="elevation__fill" data-ridge="elev-fill" fill="url(#g-elev)"/>
+            <g class="elevation__contours"></g>
+            <path class="elevation__line" data-ridge="elev"/>
+            <rect x="-40" y="330" width="1680" height="92" fill="url(#g-floor)"/>
+          </svg>
+        </div>
+        <div class="elevation__axis" aria-hidden="true"><span style="--y:90">2 100 m</span><span style="--y:210">1 900 m</span><span style="--y:330">1 700 m</span></div>
+        <div class="elevation__marks"></div>
+      </div>
       <figcaption class="label">Przekrój: dolina Yirgacheffe, z&nbsp;zachodu na wschód</figcaption>
     </figure>
 
@@ -501,6 +516,6 @@
 <script src="js/vendor/gsap.min.js"></script>
 <script src="js/vendor/ScrollTrigger.min.js"></script>
 <script src="js/vendor/lenis.min.js"></script>
-<script src="js/main.js?v=8"></script>
+<script src="js/main.js?v=10"></script>
 </body>
 </html>

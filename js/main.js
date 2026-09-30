@@ -86,7 +86,8 @@
     near: { seed: 42, base: 816, amp: 28, freq: 5, oct: 5, jitter: 3.4, peaks: [{ x: 1490, h: 84, wl: 260, wr: 200 }, { x: 60, h: 50, wl: 200, wr: 260 }] },
     edge: { h: 160, seed: 9, base: 134, amp: 16, freq: 3.6, oct: 5, jitter: 1.2, peaks: [{ x: 1130, h: 90, wl: 240, wr: 300 }, { x: 330, h: 46, wl: 240, wr: 200 }] },
     edge2: { h: 160, seed: 31, base: 138, amp: 14, freq: 4, oct: 5, jitter: 1.2, peaks: [{ x: 460, h: 92, wl: 280, wr: 240 }, { x: 1260, h: 54, wl: 220, wr: 260 }] },
-    elev: { h: 420, seed: 7, base: 340, amp: 26, freq: 3, oct: 5, jitter: 0.6, peaks: [{ x: 760, h: 236, wl: 380, wr: 450 }] }
+    elev: { h: 420, seed: 7, base: 340, amp: 26, freq: 3, oct: 5, jitter: 0.6, peaks: [{ x: 760, h: 236, wl: 380, wr: 450 }] },
+    'elev-far': { h: 420, seed: 19, base: 318, amp: 22, freq: 3.4, oct: 5, jitter: 0.5, peaks: [{ x: 360, h: 150, wl: 300, wr: 250 }, { x: 1210, h: 168, wl: 260, wr: 340 }] }
   };
   $$('[data-ridge]').forEach(p => {
     const k = p.dataset.ridge;
@@ -392,11 +393,11 @@
   const steps = $$('.astep');
   const ticks = $$('.anatomy__ticks li');
   const FOCUS = [
-    { x: 0.508, y: 0.504, k: 1.75 },
-    { x: 0.80, y: 0.118, k: 1.85 },
-    { x: 0.118, y: 0.515, k: 1.55, tx: -0.3 },
-    { x: 0.42, y: 0.745, k: 1.65 },
-    { x: 0.775, y: 0.75, k: 1.85 }
+    { x: 0.515, y: 0.518, k: 1.75 },
+    { x: 0.8125, y: 0.122, k: 1.85 },
+    { x: 0.1175, y: 0.5085, k: 1.55, tx: -0.3 },
+    { x: 0.4475, y: 0.774, k: 1.65 },
+    { x: 0.7915, y: 0.737, k: 1.85 }
   ];
   const focusOf = i => {
     const f = FOCUS[i], W = bag.offsetWidth, H = bag.offsetHeight;
@@ -434,7 +435,7 @@
     const from = i === 0 ? introPos : () => focusOf(i - 1);
     anaTL.fromTo(bagZoom, { x: () => from().x, y: () => from().y, scale: () => from().scale },
       { x: () => focusOf(i).x, y: () => focusOf(i).y, scale: () => focusOf(i).scale, duration: 0.8, immediateRender: false }, t);
-    anaTL.fromTo(hotspots[i], { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.35, ease: 'power3.out', immediateRender: false }, t + 0.45);
+    anaTL.fromTo(hotspots[i], { opacity: 0, scale: 1.22 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'power3.out', immediateRender: false }, t + 0.42); // frame closes in, like focusing
     anaTL.fromTo(steps[i], { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.35, ease: 'power2.out' }, t + 0.4);
     anaTL.fromTo(ticks[i], { '--p': 0 }, { '--p': 1, duration: 0.8, ease: 'none' }, t);
     if (i < FOCUS.length - 1) {
@@ -446,7 +447,7 @@
   anaTL
     .to(steps[FOCUS.length - 1], { autoAlpha: 0, y: -30, duration: 0.25, ease: 'power2.in' }, outT)
     .to(bagZoom, { x: 0, y: () => (isMobile() ? -vh() * 0.02 : 0), scale: () => (isMobile() ? 0.9 : 0.86), duration: 0.9 }, outT)
-    .to(hotspots, { opacity: 1, scale: 1, duration: 0.4, stagger: 0.05, ease: 'power3.out' }, outT + 0.5)
+    .fromTo(hotspots.slice(0, -1), { opacity: 0, scale: 1.15 }, { opacity: 1, scale: 1, duration: 0.45, stagger: 0.06, ease: 'power3.out', immediateRender: false }, outT + 0.5)
     .to('.anatomy__ticks', { opacity: 0, duration: 0.3 }, outT + 0.3)
     .to({}, { duration: 0.6 }, outT + 0.9);
 
@@ -478,9 +479,22 @@
     });
   });
 
-  // elevation profile draws itself
-  const elevSvg = $('.elevation__svg');
+  // elevation profile: an engraved landscape with the brand sun rising behind Gedeo
+  const elevStage = $('.elevation__stage');
+  const elevSun = $('.elevation__sun');
+  const elevGlow = $('.elevation__glow');
   const elevPts = ridgePoints(RIDGES.elev);
+  // contour lines inside the mountain, like the engraving on the bag
+  const contours = $('.elevation__contours');
+  for (let k = 1; k <= 7; k++) {
+    const d = elevPts.map(([x, y], i) => {
+      const yk = Math.max(y + k * 7, 340 + k * 12 + (y - 340) * (1 - k * 0.12));
+      return (i ? 'L' : 'M') + x.toFixed(1) + ' ' + Math.min(yk, 430).toFixed(1);
+    }).join('');
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', d); path.setAttribute('stroke-opacity', (0.2 - k * 0.018).toFixed(3));
+    contours.appendChild(path);
+  }
   const yAt = x => { let best = elevPts[0]; for (const p of elevPts) if (Math.abs(p[0] - x) < Math.abs(best[0] - x)) best = p; return best[1]; };
   const altAt = y => Math.round((1700 + (330 - y) * 200 / 120) / 10) * 10;
   let peak = elevPts.reduce((a, b) => (b[1] < a[1] ? b : a));
@@ -502,14 +516,22 @@
     gsap.set(el, { xPercent: -50, yPercent: m.up ? -100 : 0, opacity: 0, y: 10 });
     return { el, p: m.x / 1600 };
   });
-  gsap.set(elevSvg, { clipPath: 'inset(-10% 100% -10% 0)' });
+  elevStage.style.setProperty('--px', (peak[0] / 1600 * 100).toFixed(2) + '%');
+  $('.elevation__box').style.setProperty('--px', (peak[0] / 1600 * 100).toFixed(2) + '%');
+  const elevReveal = q => {
+    const front = -0.3 + q * 1.6; // soft band of light travelling west → east
+    elevStage.style.setProperty('--rv', ((1.5 - front) / 2 * 100).toFixed(2) + '%');
+    elevSun.style.transform = `translate(-50%, calc(-50% + ${((1 - q) * 34).toFixed(2)}cqh))`;
+    elevGlow.style.opacity = Math.max(0, (q - 0.25) / 0.75).toFixed(3);
+    return front;
+  };
+  elevReveal(0);
   ScrollTrigger.create({
     trigger: '.elevation', start: 'top 85%', end: 'bottom 40%', scrub: 0.8,
     onUpdate: self => {
-      const p = self.progress;
-      elevSvg.style.clipPath = `inset(-10% ${(1 - p) * 100}% -10% 0)`;
+      const front = elevReveal(clamp(self.progress / 0.8, 0, 1));
       marks.forEach(m => {
-        const on = p > m.p + 0.02;
+        const on = front > m.p + 0.06;
         if (on !== m.on) { m.on = on; gsap.to(m.el, { opacity: on ? 1 : 0, y: on ? 0 : 10, duration: 0.6, ease: 'power3.out', overwrite: true }); }
       });
     }
