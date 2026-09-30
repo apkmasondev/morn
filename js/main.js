@@ -660,7 +660,7 @@
     const ctx = ensureAudio();
     clearTimeout(ambStopT);
     if (!ambEl) {
-      ambEl = new Audio('assets/audio/morning.mp3');
+      ambEl = new Audio('assets/audio/morning.mp3?v=2');
       ambEl.loop = true; ambEl.preload = 'auto';
       if (ctx && location.protocol !== 'file:') {
         try {
