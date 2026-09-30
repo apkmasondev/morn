@@ -295,7 +295,10 @@
     filmEl.style.setProperty('--sx', sp.x + 'px');
     filmEl.style.setProperty('--sy', sp.y + 'px');
     root.style.setProperty('--lb', letterbox() + 'px');
-    $('.film__veil').style.background = `radial-gradient(circle at ${sp.x}px ${sp.y}px, #f8d9a6 0, #efbf7f ${sp.r * 0.6}px, #e2a664 ${sp.r}px, #d8975a ${sp.r * 3}px, #c98a50 100%)`;
+    // the veil is a pixel-exact copy of the SVG sun (<radialGradient cx=.42 cy=.38 r=.7>), so the
+    // hand-off from sun to portal is invisible; beyond the disc it warms into the film's light
+    const gx = sp.x - 0.16 * sp.r, gy = sp.y - 0.24 * sp.r, gr = 1.4 * sp.r;
+    $('.film__veil').style.background = `radial-gradient(circle ${gr}px at ${gx}px ${gy}px, #f8d9a6 0, #efbf7f ${gr * 0.6}px, #e2a664 ${gr}px, #d8975a ${sp.r * 3}px, #c98a50 ${sp.r * 7}px)`;
   };
   setSunVars();
   ScrollTrigger.addEventListener('refreshInit', setSunVars);
@@ -320,11 +323,13 @@
     .to('.hero-side', { opacity: 0, duration: 0.4 }, 0.05)
     .to('.sky--dawn', { opacity: 1, duration: 1.3 }, 0)
     .to('.stars', { opacity: 0, duration: 0.8 }, 0)
-    .to('.layer--sun', { y: () => -(SUN.introY - SUN.topY) * slice().s, duration: 1.3, ease: 'power1.inOut' }, 0)
+    // the sun arrives exactly when the portal opens on it
+    .to('.layer--sun', { y: () => -(SUN.introY - SUN.topY) * slice().s, duration: 1.15, ease: 'power1.inOut' }, 0)
     .to('.layer--far', { yPercent: 3, duration: 1.3 }, 0)
     .to('.layer--main', { yPercent: 6, duration: 1.3 }, 0)
-    .to('.layer--word', { yPercent: -10, opacity: 0, duration: 1.1, ease: 'power1.in' }, 0.1)
-    .to(heroLetters, { x: i => (i - 1.5) * vw() * 0.035, duration: 1.1, ease: 'power1.in' }, 0.1)
+    // the wordmark is fully gone before the portal opens, so nothing crosses the sun at the hand-off
+    .to('.layer--word', { yPercent: -10, opacity: 0, duration: 0.95, ease: 'power1.in' }, 0.1)
+    .to(heroLetters, { x: i => (i - 1.5) * vw() * 0.035, duration: 0.95, ease: 'power1.in' }, 0.1)
     .to('.layer--mid', { yPercent: 11, duration: 1.3 }, 0)
     .to('.layer--near', { yPercent: 20, duration: 1.3 }, 0)
     // portal: the sun becomes the window
