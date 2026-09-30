@@ -521,7 +521,8 @@
   const elevReveal = q => {
     const front = -0.3 + q * 1.6; // soft band of light travelling west → east
     elevStage.style.setProperty('--rv', ((1.5 - front) / 2 * 100).toFixed(2) + '%');
-    elevSun.style.transform = `translate(-50%, calc(-50% + ${((1 - q) * 34).toFixed(2)}cqh))`;
+    // like on the bag: the sun sits off the summit, to its left, not centred over it
+    elevSun.style.transform = `translate(-92%, calc(-50% + ${((1 - q) * 34).toFixed(2)}cqh))`;
     elevGlow.style.opacity = Math.max(0, (q - 0.25) / 0.75).toFixed(3);
     return front;
   };
