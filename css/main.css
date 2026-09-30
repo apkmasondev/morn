@@ -129,12 +129,15 @@ em { font-style: italic; }
 .btn-text:hover::after { transform: scaleX(0); }
 
 /* ── Grain ───────────────────────────────────────────── */
-.grain {
-  position: fixed; inset: -100px; z-index: 90; pointer-events: none;
+/* the fixed layer stays exactly viewport-sized (an oversized fixed box lets phones pan sideways);
+   the oversized, drifting texture lives inside and is clipped */
+.grain { position: fixed; inset: 0; z-index: 90; pointer-events: none; overflow: hidden; opacity: .045; }
+.grain::before {
+  content: ""; position: absolute; inset: -100px;
   background: url(../assets/img/grain.png) repeat;
-  opacity: .045;
   animation: grain 1s steps(6) infinite;
 }
+html.is-hidden .grain::before { animation-play-state: paused; }
 @keyframes grain {
   0% { transform: translate(0, 0); } 20% { transform: translate(-37px, 22px); } 40% { transform: translate(24px, -41px); }
   60% { transform: translate(-19px, -13px); } 80% { transform: translate(43px, 31px); } 100% { transform: translate(0, 0); }
@@ -525,7 +528,7 @@ html.is-ready:not(.is-scrolling)[data-hud-bl="light"] .hud--bottom { opacity: 0;
 /* ==========================================================================
    CART
    ========================================================================== */
-.cart { position: fixed; inset: 0; z-index: 150; }
+.cart { position: fixed; inset: 0; z-index: 150; overflow: hidden; }
 .cart[hidden] { display: block; visibility: hidden; pointer-events: none; }
 .cart__scrim { position: absolute; inset: 0; background: rgba(10, 8, 6, .55); opacity: 0; }
 .cart__panel { position: absolute; top: 0; right: 0; bottom: 0; width: min(460px, 100vw); background: var(--paper); color: var(--ink); display: flex; flex-direction: column; transform: translateX(100%); }
@@ -644,7 +647,7 @@ html.is-ready:not(.is-scrolling)[data-hud-bl="light"] .hud--bottom { opacity: 0;
 
 
 @media (prefers-reduced-motion: reduce) {
-  .grain { animation: none; }
+  .grain::before { animation: none; }
   .scroll-cue__line::after { animation: none; }
   *, *::before, *::after { transition: none !important; }
 }

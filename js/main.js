@@ -1158,7 +1158,7 @@
      Housekeeping
      ──────────────────────────────────────────────────────────────────────── */
   // pause the grain when the tab is hidden, and pause decorative loops offscreen
-  document.addEventListener('visibilitychange', () => { $('.grain').style.animationPlayState = document.hidden ? 'paused' : 'running'; });
+  document.addEventListener('visibilitychange', () => { root.classList.toggle('is-hidden', document.hidden); });
 
   window.addEventListener('load', () => ScrollTrigger.refresh());
   if (document.fonts) document.fonts.ready.then(() => ScrollTrigger.refresh());
