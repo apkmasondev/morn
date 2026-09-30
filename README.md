@@ -29,7 +29,7 @@ w okno do filmu.
 - Fonty Cormorant Garamond i Jost hostowane lokalnie (licencja SIL Open Font License).
 - Film przewijany scrollem zakodowany z krótkim GOP, osobny kadr pionowy na telefony.
 - Filmy ładowane leniwie i pauzowane poza ekranem.
-- Ścieżka dźwiękowa „First Light Ritual” z warstwą porannego śpiewu ptaków: domyślnie wyłączona, strumieniowana dopiero po kliknięciu „Dźwięk”.
+- Ścieżka dźwiękowa „First Light Ritual”: domyślnie wyłączona, strumieniowana dopiero po kliknięciu „Dźwięk”.
 - Obsługa `prefers-reduced-motion`, nawigacji klawiaturą i czytników ekranu, fallback do posterów.
 - Koszyk i newsletter działają wyłącznie w przeglądarce. Strona nie wysyła żadnych danych.
 
@@ -51,6 +51,7 @@ w `index.html` (`main.css?v=…`, `main.js?v=…`), żeby odwiedzający od razu 
 
 ```
 index.html
+favicon.svg  ikona (litera M z fontu marki, jasny/ciemny motyw) + PNG dla starszych przeglądarek
 css/        style i deklaracje fontów
 js/         logika strony + biblioteki w vendor/
 assets/     obrazy, filmy, dźwięk, fonty

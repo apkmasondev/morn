@@ -696,18 +696,65 @@
      VI · TWO MORNINGS
      ──────────────────────────────────────────────────────────────────────── */
   const panelVideos = $$('.panel video');
-  const vidIO = new IntersectionObserver(entries => {
-    entries.forEach(en => {
-      const v = en.target;
-      if (en.isIntersecting) {
-        if (!v.src) { v.src = innerWidth < 1100 ? v.dataset.srcSm : v.dataset.srcLg; v.preload = 'auto'; }
-        if (!REDUCE) { const p = v.play(); p && p.catch(() => {}); }
-      } else if (v.src) v.pause();
-    });
-  }, { rootMargin: '25% 0px 25% 0px' });
-  panelVideos.forEach(v => vidIO.observe(v));
+  // resolution follows the panel's real pixel width (an expanded panel is ~64% of the viewport)
+  const panelSrc = v => {
+    const px = (isMobile() ? innerWidth : innerWidth * 0.64) * Math.min(devicePixelRatio || 1, 2);
+    return px <= 1000 ? v.dataset.srcSm : v.dataset.srcLg;
+  };
+  // load ahead of time, but only decode while actually on screen
+  const loadIO = new IntersectionObserver(entries => entries.forEach(en => {
+    if (!en.isIntersecting || en.target.src) return;
+    en.target.src = panelSrc(en.target); en.target.preload = 'auto';
+    loadIO.unobserve(en.target);
+  }), { rootMargin: '60% 0px 60% 0px' });
+  panelVideos.forEach(v => loadIO.observe(v));
 
+  /* The two mornings take turns. Two videos decoding at once halve Chrome's frame rate
+     (measured: 1 video 60 fps, 2 videos 30 fps), so only the active morning plays. */
   const panelsWrap = $('.mornings__panels');
+  const panels = $$('.panel');
+  const panelBars = $$('.panel__bar');
+  const CYCLE = 9000;
+  panelsWrap.style.setProperty('--cycle', CYCLE / 1000 + 's');
+  let activePanel = -1, panelsInView = false, panelHover = false, cycleT = 0;
+  const panelRatios = panels.map(() => 0);
+  const scheduleCycle = () => {
+    clearTimeout(cycleT);
+    panelBars.forEach(bar => bar.classList.remove('is-running'));
+    if (!panelsInView || panelHover || isMobile() || REDUCE || activePanel < 0) return;
+    const bar = panelBars[activePanel];
+    void bar.offsetWidth; bar.classList.add('is-running');
+    cycleT = setTimeout(() => setActivePanel(1 - activePanel), CYCLE);
+  };
+  const setActivePanel = i => {
+    if (i !== activePanel) {
+      activePanel = i;
+      panels.forEach((p, k) => p.classList.toggle('is-active', k === i));
+    }
+    panelVideos.forEach((v, k) => {
+      if (k === i && panelsInView && !REDUCE) { if (!v.src) v.src = panelSrc(v); const p = v.play(); p && p.catch(() => {}); }
+      else if (v.src) v.pause();
+    });
+    scheduleCycle();
+  };
+  new IntersectionObserver(([en]) => {
+    panelsInView = en.isIntersecting;
+    panelsWrap.classList.toggle('is-live', panelsInView && !REDUCE);
+    if (panelsInView) setActivePanel(activePanel < 0 ? 0 : activePanel);
+    else { clearTimeout(cycleT); panelVideos.forEach(v => v.src && v.pause()); }
+  }, { threshold: 0.12 }).observe(panelsWrap);
+  // phones: panels are stacked, the one that fills more of the screen plays
+  const ratioIO = new IntersectionObserver(entries => {
+    entries.forEach(en => { panelRatios[panels.indexOf(en.target)] = en.intersectionRatio; });
+    if (!isMobile() || !panelsInView) return;
+    const best = panelRatios[0] >= panelRatios[1] ? 0 : 1;
+    if (best !== activePanel) setActivePanel(best);
+  }, { threshold: [0, 0.2, 0.4, 0.6, 0.8, 1] });
+  panels.forEach((p, k) => {
+    ratioIO.observe(p);
+    p.addEventListener('pointerenter', e => { if (e.pointerType !== 'mouse' || isMobile()) return; panelHover = true; setActivePanel(k); });
+  });
+  panelsWrap.addEventListener('pointerleave', e => { if (e.pointerType !== 'mouse') return; panelHover = false; scheduleCycle(); });
   const mm = gsap.matchMedia();
   mm.add('(min-width: 861px)', () => {
     gsap.fromTo(panelsWrap, { clipPath: 'inset(14% 18% 0% 18%)' }, {
