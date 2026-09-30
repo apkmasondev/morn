@@ -86,13 +86,18 @@
     near: { seed: 42, base: 816, amp: 28, freq: 5, oct: 5, jitter: 3.4, peaks: [{ x: 1490, h: 84, wl: 260, wr: 200 }, { x: 60, h: 50, wl: 200, wr: 260 }] },
     edge: { h: 160, seed: 9, base: 134, amp: 16, freq: 3.6, oct: 5, jitter: 1.2, peaks: [{ x: 1130, h: 90, wl: 240, wr: 300 }, { x: 330, h: 46, wl: 240, wr: 200 }] },
     edge2: { h: 160, seed: 31, base: 138, amp: 14, freq: 4, oct: 5, jitter: 1.2, peaks: [{ x: 460, h: 92, wl: 280, wr: 240 }, { x: 1260, h: 54, wl: 220, wr: 260 }] },
-    elev: { h: 420, seed: 7, base: 340, amp: 26, freq: 3, oct: 5, jitter: 0.6, peaks: [{ x: 760, h: 236, wl: 380, wr: 450 }] },
-    'elev-far': { h: 420, seed: 19, base: 318, amp: 22, freq: 3.4, oct: 5, jitter: 0.5, peaks: [{ x: 360, h: 150, wl: 300, wr: 250 }, { x: 1210, h: 168, wl: 260, wr: 340 }] }
   };
+  // the elevation profile is drawn from the intro's own ridges — the same Gedeo you saw at dawn,
+  // rescaled from the 1600×900 landscape into the 1600×420 cross-section
+  const toElev = pts => pts.map(([x, y]) => [x, 340 + (y - 640) * 0.944]);
+  const ELEV = { main: toElev(ridgePoints(RIDGES.main)), far: toElev(ridgePoints(RIDGES.far)) };
+  const pathFrom = (pts, close, H = 420, W = 1600) =>
+    'M' + pts.map(p => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join('L') + (close ? `L${W + 40} ${H + 60}L-40 ${H + 60}Z` : '');
   $$('[data-ridge]').forEach(p => {
     const k = p.dataset.ridge;
-    if (k === 'elev') p.setAttribute('d', ridgePath(RIDGES.elev, false));
-    else if (k === 'elev-fill') p.setAttribute('d', ridgePath(RIDGES.elev, true));
+    if (k === 'elev') p.setAttribute('d', pathFrom(ELEV.main, false));
+    else if (k === 'elev-fill') p.setAttribute('d', pathFrom(ELEV.main, true));
+    else if (k === 'elev-far') p.setAttribute('d', pathFrom(ELEV.far, true));
     else p.setAttribute('d', ridgePath(RIDGES[k]));
   });
 
@@ -483,7 +488,7 @@
   const elevStage = $('.elevation__stage');
   const elevSun = $('.elevation__sun');
   const elevGlow = $('.elevation__glow');
-  const elevPts = ridgePoints(RIDGES.elev);
+  const elevPts = ELEV.main;
   // contour lines inside the mountain, like the engraving on the bag
   const contours = $('.elevation__contours');
   for (let k = 1; k <= 7; k++) {
@@ -501,7 +506,7 @@
   const marksData = [
     { x: 300, t: 'Kochere', up: false },
     { x: Math.round(peak[0]), t: 'Gedeo', up: true },
-    { x: 1250, t: 'Stacja obróbki', up: false }
+    { x: 1430, t: 'Stacja obróbki', up: false }
   ];
   const marksWrap = $('.elevation__marks');
   const marks = marksData.map(m => {
