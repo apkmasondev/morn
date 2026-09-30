@@ -1,6 +1,6 @@
 # MORN — Kawa dla pierwszego światła
 
-**[apkmasondev.github.io/morn](https://apkmasondev.github.io/morn/)**
+**[apkmason.dev/morn](https://apkmason.dev/morn/)**
 
 Interaktywna kampania cyfrowa fikcyjnej marki kawy premium MORN.
 To nie jest klasyczny landing page, tylko jeden poranek opowiedziany scrollem. Zegar w rogu
